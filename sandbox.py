@@ -27,13 +27,20 @@ df = pd.DataFrame(load_establishments())
 df = map_to_columns(df, "Scores")
 df = map_to_columns(df, "Geocode")
 
-ratings = list(map(str, range(0, 6)))
+ratings = list(map(str, range(0, 4)))
 rated_df = df.loc[df['RatingValue'].isin(ratings)]
 # rated_df = rated_df[rated_df['RatingValue'].notna()]
 
+
+def colorcode(v):
+    chart = {"0": "darkred", "1": "red", "2": "lightpink", "3": "orange", "4": "lightgreen"}
+    return chart.get(v, "black")
+
+
 rated_df = rated_df[rated_df['Latitude'].notna()]
 rated_df['test_col'] = rated_df['BusinessName'].astype(str) + '<br>' + rated_df['RatingValue'] + "<br>" + rated_df['RatingDate'] + "<br>" + rated_df['BusinessType']
-rated_df[['Latitude', "Longitude", "test_col"]].to_csv("dummy_data.csv", index=False)
+rated_df['colorcode'] = rated_df['RatingValue'].apply(colorcode)
+rated_df[['Latitude', "Longitude", "test_col", "colorcode"]].to_csv("dummy_data.csv", index=False)
 
 
 # def return_map_data(df):
