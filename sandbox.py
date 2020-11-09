@@ -32,8 +32,8 @@ rated_df = df.loc[df['RatingValue'].isin(ratings)]
 # rated_df = rated_df[rated_df['RatingValue'].notna()]
 
 rated_df = rated_df[rated_df['Latitude'].notna()]
-
-rated_df[['Latitude', "Longitude", "BusinessName"]].to_csv("dummy_data.csv", index=False)
+rated_df['test_col'] = rated_df['BusinessName'].astype(str) + '<br>' + rated_df['RatingValue'] + "<br>" + rated_df['RatingDate'] + "<br>" + rated_df['BusinessType']
+rated_df[['Latitude', "Longitude", "test_col"]].to_csv("dummy_data.csv", index=False)
 
 
 # def return_map_data(df):
